@@ -1,5 +1,13 @@
 package src.p03.c01;
-
+/*
+ * Autor: David Perez
+ * Steven Alba
+ * 
+ * Esta es la clase principal de parque donde indicamos cuando entran y salen y por que puerta.
+ * 
+ * Version 1.1
+ * 
+ */
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -46,7 +54,11 @@ public class Parque implements IParque{
 	// 
 	// TODO Método salirDelParque
 	//
-	
+	@Override
+	public void salirDelParque(String puerta) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
@@ -88,6 +100,9 @@ public class Parque implements IParque{
 		// TODO
 		//
 	}
+
+
+	
 
 
 }
