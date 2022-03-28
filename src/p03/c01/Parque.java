@@ -5,7 +5,7 @@ package src.p03.c01;
  * 
  * Esta es la clase principal de parque donde indicamos cuando entran y salen y por que puerta.
  * 
- * Version 1.1
+ * Version 1.2
  * 
  */
 import java.util.Enumeration;
@@ -13,11 +13,12 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-
-	// TODO 
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
-	
+	// Definimos la variable capacidadMaxParque y le asignamos el valor de 50 segun el enunciado.
+	public static final int capacidadMaxParque = 50;
+	// Definimos la variable capacidadMinParque y le asignamos el valor de 0 ya que es 0 si esta vacio.
+	public static final int capacidadMinParque = 0;
 	
 	public Parque() {	// TODO
 		contadorPersonasTotales = 0;
@@ -27,7 +28,7 @@ public class Parque implements IParque{
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){		// TODO
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -35,7 +36,7 @@ public class Parque implements IParque{
 		}
 		
 		// TODO
-				
+		comprobarAntesDeEntrar();	
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -44,11 +45,9 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
+		checkInvariante();
 		
-		
-		// TODO
-		
+		notifyAll();
 	}
 	
 	// 
