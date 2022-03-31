@@ -54,8 +54,25 @@ public class Parque implements IParque{
 	// TODO Método salirDelParque
 	//
 	@Override
-	public void salirDelParque(String puerta) {
-		// TODO Auto-generated method stub
+	public synchronized void salirDelParque(String puerta) {
+		// Si no hay entradas por esa puerta, inicializamos
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
+		
+		// TODO
+		comprobarAntesDeSalir();	
+		
+		// Aumentamos el contador total y el individual
+		contadorPersonasTotales--;		
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+		
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Salida");
+		
+		checkInvariante();
+		
+		notifyAll();
 		
 	}
 	
@@ -81,23 +98,30 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		// TODO 
-		// TODO
-		
-		
-		
+		assert contadorPersonasTotales <= capacidadMaxParque : "INV: El numero de personas supera el aforo maximo del parque permitido";
+		assert contadorPersonasTotales >= capacidadMinParque: "INV: No puede haber un numero negativo de personas en el parque";
 	}
 
 	protected void comprobarAntesDeEntrar(){	// TODO
-		//
-		// TODO
-		//
+
+		while(contadorPersonasTotales >= capacidadMaxParque){
+			try {
+				wait();	
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void comprobarAntesDeSalir(){		// TODO
-		//
-		// TODO
-		//
+		
+		while(contadorPersonasTotales <= capacidadMinParque){
+			try {
+				wait();	
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 
