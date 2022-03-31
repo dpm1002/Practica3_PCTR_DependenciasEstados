@@ -28,6 +28,7 @@ public class ActividadEntradaPuerta implements Runnable{
 		public void run() {
 			for (int i = 0; i < NUMENTRADAS; i ++) {
 				try {
+					//Entrar al parque
 					parque.entrarAlParque(puerta);
 					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
 				} catch (InterruptedException e) {

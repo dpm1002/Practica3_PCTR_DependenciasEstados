@@ -5,14 +5,14 @@ package src.p03.c01;
  * 
  * Esta es la clase principal de parque donde indicamos cuando entran y salen y por que puerta.
  * 
- * Version 1.2
+ * Version 1.3
  * 
  */
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class Parque implements IParque{
-
+	//Contador de personas totales en el parque.
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	// Definimos la variable capacidadMaxParque y le asignamos el valor de 50 segun el enunciado.
@@ -20,22 +20,22 @@ public class Parque implements IParque{
 	// Definimos la variable capacidadMinParque y le asignamos el valor de 0 ya que es 0 si esta vacio.
 	public static final int capacidadMinParque = 0;
 	
-	public Parque() {	// TODO
+	//Constructor del parque
+	public Parque() {	
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		// TODO
+		
 	}
 
 
 	@Override
-	public synchronized void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){		
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
-		
-		// TODO
+		//Comprobamos si puede una persona entrar al parque
 		comprobarAntesDeEntrar();	
 		
 		// Aumentamos el contador total y el individual
@@ -45,6 +45,7 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
+		//Comprobamos los invariantes
 		checkInvariante();
 		
 		notifyAll();
@@ -55,21 +56,22 @@ public class Parque implements IParque{
 	//
 	@Override
 	public synchronized void salirDelParque(String puerta) {
-		// Si no hay entradas por esa puerta, inicializamos
+		// Si no hay salidas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO
+		//Comprobamos si puede una persona salir del parque
 		comprobarAntesDeSalir();	
 		
-		// Aumentamos el contador total y el individual
+		// Reducimos el contador total y el individual
 		contadorPersonasTotales--;		
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
 		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Salida");
 		
+		//Comprobamos los invariantes
 		checkInvariante();
 		
 		notifyAll();
@@ -78,7 +80,7 @@ public class Parque implements IParque{
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
-		System.out.println("--> Personas en el parque " + contadorPersonasTotales); //+ " tiempo medio de estancia: "  + tmedio);
+		System.out.println("--> Personas en el parque " + contadorPersonasTotales); 
 		
 		// Iteramos por todas las puertas e imprimimos sus entradas
 		for(String p: contadoresPersonasPuerta.keySet()){
@@ -102,8 +104,8 @@ public class Parque implements IParque{
 		assert contadorPersonasTotales >= capacidadMinParque: "INV: No puede haber un numero negativo de personas en el parque";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
-
+	protected void comprobarAntesDeEntrar(){	
+		
 		while(contadorPersonasTotales >= capacidadMaxParque){
 			try {
 				wait();	
@@ -113,7 +115,7 @@ public class Parque implements IParque{
 		}
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
+	protected void comprobarAntesDeSalir(){		
 		
 		while(contadorPersonasTotales <= capacidadMinParque){
 			try {

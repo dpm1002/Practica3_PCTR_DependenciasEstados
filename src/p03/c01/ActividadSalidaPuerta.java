@@ -16,10 +16,6 @@ import java.util.logging.Logger;
  */
 
 public class ActividadSalidaPuerta implements Runnable{
-
-	//
-	// TODO
-	//
 	
 	private static final int NUMSALIDAS = 20;
 	private String puerta;
@@ -34,6 +30,7 @@ public class ActividadSalidaPuerta implements Runnable{
 	public void run() {
 		for (int i = 0; i < NUMSALIDAS; i ++) {
 			try {
+				//Salir del parque
 				parque.salirDelParque(puerta);
 				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
 			} catch (InterruptedException e) {

@@ -9,9 +9,9 @@ package src.p03.c01;
  * 
  */
 public interface IParque {
-	
+	//Metodo Entrar al parque
 	public abstract void entrarAlParque(String puerta);
-
+	//Metodo Salir del parque
 	public abstract void salirDelParque(String puerta);
 
 }
